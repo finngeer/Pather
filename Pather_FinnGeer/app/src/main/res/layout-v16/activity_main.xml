@@ -11,26 +11,29 @@
         android:id="@+id/dsField"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/creditsBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/creditsBtn"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/outerspace"
-        android:layout_marginBottom="683dp"
+        android:layout_width="157dp"
+        android:layout_height="43dp"
         android:background="#A41FC9"
+        android:fontFamily="@font/outerspace"
         android:onClick="onClick"
         android:text="@string/creditBtn_txt"
         android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="jelly_bean" />
+        app:layout_constraintVertical_bias="0.98" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
