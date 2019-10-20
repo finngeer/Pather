@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -13,6 +15,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class DrawSurface extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
@@ -21,13 +24,13 @@ public class DrawSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private SurfaceHolder mHolder;
     private static final int CELL_SIZE = 32;
     private NavCell[][] myCells;
+    private ArrayList<NavCell> visitedCells;
+    private ArrayList<NavCell> blockerCells;
     private NavCell startCell;
     private NavCell endCell;
     private Bitmap bmpStart;
     private Bitmap bmpEnd;
     private Bitmap bmpBlocker;
-
-
 
 
     public void init() {
@@ -39,14 +42,19 @@ public class DrawSurface extends SurfaceView implements SurfaceHolder.Callback, 
         bmpEnd = BitmapFactory.decodeResource(getResources(), R.drawable.end);
         bmpBlocker = BitmapFactory.decodeResource(getResources(), R.drawable.blocker);
 
-    }
 
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //canvas.drawBitmap(bmpStart,startCell.getBounds().left, startCell.getBounds().top, null);
-        //canvas.drawBitmap(bmpEnd,endCell.getBounds().left, endCell.getBounds().top, null);
+        //  color in blocker cells
+        //for (NavCell cell:blockerCells) canvas.drawRect(cell.getBounds(), blockerColor);
+
+
+        // for each cell in cell list that has been visited
+        //for (NavCell cell:visitedCells) canvas.drawRect(cell.getBounds(), pathColor);
+
 
     }
 
@@ -99,6 +107,8 @@ public class DrawSurface extends SurfaceView implements SurfaceHolder.Callback, 
             for(int i = 0; i< cellCols; i++){
                 if(j == midRow && i > 0 && i < cellCols -1){
                     myCells[j][i].setPassable(false);
+                    blockerCells.add(myCells[j][i]);
+
                 }
             }
         }
@@ -118,6 +128,7 @@ public class DrawSurface extends SurfaceView implements SurfaceHolder.Callback, 
     public boolean onTouch(View v, MotionEvent event) {
 
         Point eventPoint = new Point((int)event.getX(), (int)event.getY());
+
         int chosenCol = (int) Math.ceil(eventPoint.y / CELL_SIZE);
         int chosenRow = (int) Math.ceil(eventPoint.x / CELL_SIZE);
 
@@ -158,6 +169,7 @@ public class DrawSurface extends SurfaceView implements SurfaceHolder.Callback, 
                     else{
                         neighbor.update(tmpCost,heuristic(neighbor,endCell),current);
                         cellQueue.add(neighbor);
+                        visitedCells.add(neighbor);
                         neighbor.setVisited(true);
                     }
                 }
