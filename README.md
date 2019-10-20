@@ -1,2 +1,0 @@
-# Pather
- Path-Finding Program
